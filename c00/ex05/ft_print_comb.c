@@ -18,31 +18,9 @@ void ft_print_comb(void)
     int j = i + 1;
     int k = j + 1;
 
-    // for (; i < j; i++) {
-    //     printf("Entering 1st loop, i = %d\n", i);
-    //     for (; j < k; j++) {
-    //         printf("Entering 2nd loop, j = %d\n", j);
-    //         for (; k < 10; k++)
-    //         {
-    //             printf("Entering 3rd loop, k = %d\n", k);
-    //             char a = i + 48; // First ASCII nb
-    //             char b = j + 48; // First ASCII nb
-    //             char c = k + 48; // First ASCII nb
-    //             char z = '\n';
-    //             write(1, &a, 1);
-    //             write(1, &b, 1);
-    //             write(1, &c, 1);
-    //             write(1, &z, 1);
-    //             k = k == 10 ? j + 1 : k;
-    //         }
-    //         printf("Exiting 2nd loop, j = %d vs k = %d\n", j, k);
-    //     }
-    //     printf("Exiting 1st loop, i = %d vs j = %d\n", i, j);
-    // }
-
-    while(i <= j)
+    for(; i < j; i++)
     {
-        while(j <= k)
+        for(; j < k; j++)
         {
             for (; k < 10; k++)
             {
@@ -55,11 +33,16 @@ void ft_print_comb(void)
                 write(1, &c, 1);
                 write(1, &z, 1);
             }
-            j++;
+            if(k == 10 && j != (k-1))
+            {
+                k = j + 2;
+            }
         }
-        i++;
-        j = i + 1;
-        k = j + 1;
+        if(k == 10 && j == 10)
+        {
+            j = i + 2;
+            k = j + 1;
+        }
     }
 }
 
