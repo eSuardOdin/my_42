@@ -50,9 +50,12 @@ void ft_putnbr(int nb)
                 }
                 ft_putchar(ft_digit_to_char(unit));
             }
-            else if(isFirstUnit == 1)
+            else
             {
-                ft_putchar(ft_digit_to_char(0));
+                if(isFirstUnit == 1)
+                {
+                    ft_putchar(ft_digit_to_char(0));
+                }
             }
 
             nb = nb % pow;
@@ -65,6 +68,7 @@ void ft_putnbr(int nb)
 int main()
 {
     ft_putnbr(-3583);
+    ft_putnbr(12000);
 
     return 0;
 }
