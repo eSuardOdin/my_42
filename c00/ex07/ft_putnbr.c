@@ -37,12 +37,10 @@ void ft_putnbr(int nb)
     // On va dec de 100 000 000 à 10
     for(int pow = 100000000; pow >= 1; pow/=10)
     {
-        // printf("Test de %d over %d\n", nb, pow);
         if(nb >= pow)
         {
             // Get the unit
             unit = nb / pow;
-            // printf("Div de %d par %d = %d\n", nb, pow, unit);
             if(unit != 0)
             {
                 if(!isFirstUnit) {
@@ -50,15 +48,12 @@ void ft_putnbr(int nb)
                 }
                 ft_putchar(ft_digit_to_char(unit));
             }
-            else
-            {
-                if(isFirstUnit == 1)
-                {
-                    ft_putchar(ft_digit_to_char(0));
-                }
-            }
-
             nb = nb % pow;
+        }
+        // If zero
+        else if(isFirstUnit)
+        {
+            ft_putchar(ft_digit_to_char(0));
         }
     }
     ft_putchar('\n');
