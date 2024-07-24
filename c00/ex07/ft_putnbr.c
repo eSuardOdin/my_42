@@ -12,6 +12,7 @@
  */
 
 #include <unistd.h>
+#include <limits.h>
 #include <stdio.h>
 void ft_putchar(char c)
 {
@@ -35,7 +36,7 @@ void ft_putnbr(int nb)
         nb *= -1;
     }
     // On va dec de 100 000 000 à 10
-    for(int pow = 100000000; pow >= 1; pow/=10)
+    for(int pow = 1000000000; pow >= 1; pow/=10)
     {
         if(nb >= pow)
         {
@@ -56,14 +57,20 @@ void ft_putnbr(int nb)
             ft_putchar(ft_digit_to_char(0));
         }
     }
+    if(!isFirstUnit) {
+        ft_putchar(ft_digit_to_char(0));
+    }
     ft_putchar('\n');
 }
 
 
 int main()
 {
-    ft_putnbr(-3583);
-    ft_putnbr(12000);
+    ft_putnbr(0);
+    ft_putnbr(1);
+    ft_putnbr(-1);
+    ft_putnbr(INT_MIN + 1);
+    ft_putnbr(INT_MAX);
 
     return 0;
 }
