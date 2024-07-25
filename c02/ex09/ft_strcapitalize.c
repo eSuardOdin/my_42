@@ -9,7 +9,12 @@
 char *ft_strcapitalize(char *str)
 {
 
-    int isNewWord = 1;
+    
+    if((int)*(str+1) >= 97 && (int)*(str+1) <= 122)
+    {
+        *(str) = (int)*(str) - 32;
+    }
+    int isNewWord = 0;
     while(*str != '\0')
     {
 
@@ -20,9 +25,9 @@ char *ft_strcapitalize(char *str)
         }
         
         // Check if new word
-        if(isNewWord && ((int)*str >= 65 && (int)*str <= 90))
+        if(isNewWord && ((int)*(str+1) >= 97 && (int)*(str+1) <= 122))
         {
-            *str = (int)*str + 32;
+            *(str+1) = (int)*(str+1) - 32;
         }
         str++;
         if(isNewWord)
@@ -39,5 +44,10 @@ int main()
     printf("%s\n", str);
     ft_strcapitalize(str);
     printf("%s\n", str);
+
+    char str2[35] = "ceci est un autre test lol m;";
+    printf("%s\n", str2);
+    ft_strcapitalize(str2);
+    printf("%s\n", str2);
     return 0;
 }
