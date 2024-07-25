@@ -46,16 +46,32 @@ void print_hex(int n)
     }
 }
 
-// void ft_putstr_non_printable(char *str)
-// {
-
-// }
+void ft_putstr_non_printable(char *str)
+{
+    char c;
+    char n = '\n';
+    while(*str != '\0')
+    {
+        if((int) *str < 32 || (int) *str > 126)
+        {
+            print_hex((int) *str);
+        }
+        else
+        {
+            c = *str;
+            write(1, &c, 1);
+        }
+        str++;
+    }
+    write(1, &n, 1);
+}
 
 int main()
 {
-    print_hex(302);
-    printf("\n");
-    print_hex(38975);
-    printf("\n");
+    char *test_print = "Ceci est un test sans caracteres non printable.";
+    ft_putstr_non_printable(test_print);
+    char *test_not_print = "\tCeci est \v\n un test avec \tcaracteres non printable\a";
+    ft_putstr_non_printable(test_not_print);
+    printf("%s\n", test_not_print);
     return 0;
 }
