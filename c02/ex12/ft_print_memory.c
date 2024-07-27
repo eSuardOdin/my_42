@@ -15,30 +15,43 @@
 #include <stdio.h>
 #include <unistd.h>
 
+
+// void print_hex_address(unsigned long dec_val)
 void print_hex_address(void *p)
 {
-    printf("%p", p);
+    unsigned long dec_val = (unsigned long) p; // Only useful if first signature
+
     // Getting the power of 16
-    int pow = 1;
-    while(pow < n)
+    unsigned long pow = 1;
+    int zero_padding = 15;
+    char z = '0';
+    char point = ':';
+    while(pow < dec_val)
     {
         pow *= 16;
-        if(pow > n)
+        zero_padding--;
+        if(pow > dec_val)
         {
             pow /= 16;
+            zero_padding++;
             break;
         }
     }
+
+    // Writting 0 in order to get 16 long addresses
+    for(; zero_padding > 0; zero_padding--)
+    {
+        write(1, &z, 1);        
+    }
+
     int unit;
     char c_unit;
-    char back = '\\';
-    write(1, &back, 1);
-    for(int i = pow; i >= 1; i /= 16)
+    for(unsigned long i = pow; i >= 1; i /= 16)
     {
-        unit = n / i;
+        unit = (int) (dec_val / i);
         if(unit > 9)
         {
-            c_unit = (char) unit + 55; // 10 + 55 = 65 ('A')
+            c_unit = (char) unit + 87; // 10 + 87 = 97 ('a')
         }
         else
         {
@@ -46,22 +59,37 @@ void print_hex_address(void *p)
         }
         write(1, &c_unit, 1);
 
-        n = n % i;
+        dec_val = dec_val % i;
         if(i == 1)
         {
+            write(1, &point, 1);
             return;
         }
     }
 }
+
+
+void *ft_print_memory(void *addr, unsigned int size)
+{
+    if(size == 0)
+    {
+        return;
+    }
+}
+
+
+
 int main()
 {
-    int a = 2;
-    int *b = &a;
-    char c = 'e';
-    char *d = &c;
-    print_hex_address(b);
+    long long a = 2;
+    long long *b = &a;
+    int c = 'e';
+    int *d = &c;
+    
+    print_hex_address((unsigned long) b);
     printf("\n");
-    print_hex_address(d);
+    print_hex_address((unsigned long) d);
+    // printf("%p", p);
     printf("\n");
     return 0;
 }
