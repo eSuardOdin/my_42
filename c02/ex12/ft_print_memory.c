@@ -15,6 +15,20 @@
 #include <stdio.h>
 #include <unistd.h>
 
+char get_hex_char(int unit)
+{
+    char c_unit;
+    if(unit > 9)
+    {
+        c_unit = (char) unit + 87; // 10 + 87 = 97 ('a')
+    }
+    else
+    {
+        c_unit = (char) unit + 48; // 0 + 48 = 48 ('0')
+    }
+    return c_unit;
+}
+
 
 // void print_hex_address(unsigned long dec_val)
 void print_hex_address(void *p)
@@ -26,6 +40,7 @@ void print_hex_address(void *p)
     int zero_padding = 15;
     char z = '0';
     char point = ':';
+    char space = ' ';
     while(pow < dec_val)
     {
         pow *= 16;
@@ -49,32 +64,93 @@ void print_hex_address(void *p)
     for(unsigned long i = pow; i >= 1; i /= 16)
     {
         unit = (int) (dec_val / i);
-        if(unit > 9)
-        {
-            c_unit = (char) unit + 87; // 10 + 87 = 97 ('a')
-        }
-        else
-        {
-            c_unit = (char) unit + 48; // 0 + 48 = 48 ('0')
-        }
+        c_unit = get_hex_char(unit);
         write(1, &c_unit, 1);
 
         dec_val = dec_val % i;
         if(i == 1)
         {
             write(1, &point, 1);
+            write(1, &space, 1);
             return;
         }
     }
 }
 
 
+
+void print_byte(char *p)
+{
+    int val = (int) *p;
+    int unit;
+    char c_unit;
+    for(int div = 16; div >= 1; div /= 16)
+    {
+        unit = (int) (val / div);
+        c_unit = get_hex_char(unit);
+        write(1, &c_unit, 1);
+
+        val = val % div;
+        if(div == 1)
+        {
+            return;
+        }
+    }
+}
+
+void print_line(void *p, int *remaining_size)
+{
+    char space = ' ';
+    char line[16];
+    // Check remaining
+    int bytes_to_print = *remaining_size < 16 ? *remaining_size : 16;
+    *remaining_size -= bytes_to_print;
+
+    // print address 
+    print_hex_address(p);
+    for(int i = 0; i < remaining_size)
+    {
+        // Write space when 2 bytes printed
+        if(i && i % 2 == 0)
+        {
+            write(1, &space, 1);
+        }
+
+    }
+    // increment pointer location
+    p += bytes_to_print;
+}
+
+/**
+ * @brief Append the string with the values read in memory
+ * 
+ * @param str The string to append
+ * @param byte_val The value read from memory
+ * @param i String index
+ */
+void append_printable_string(char str[], int byte_val, int i)
+{
+    char c;
+    if(byte_val < 32 || byte_val > 126)
+    {
+        c = '.'
+    }
+    else
+    {
+        c = (char) byte_val;
+    }
+    str[i] = c;
+}
+
+
+
 void *ft_print_memory(void *addr, unsigned int size)
 {
     if(size == 0)
     {
-        return;
+        return addr;
     }
+    return addr;
 }
 
 
@@ -86,10 +162,9 @@ int main()
     int c = 'e';
     int *d = &c;
     
-    print_hex_address((unsigned long) b);
+    ft_print_memory(b, 2);
     printf("\n");
-    print_hex_address((unsigned long) d);
-    // printf("%p", p);
+    ft_print_memory(d, 2);
     printf("\n");
     return 0;
 }
