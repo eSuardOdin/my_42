@@ -98,27 +98,32 @@ void print_byte(char *p)
     }
 }
 
-void print_line(void *p, int *remaining_size)
+void print_line(void *p, unsigned int *remaining_size)
 {
+    printf("In print_line, size = %d\n", *remaining_size);
     char space = ' ';
-    char line[16];
+    //char line[16];
     // Check remaining
     int bytes_to_print = *remaining_size < 16 ? *remaining_size : 16;
-    *remaining_size -= bytes_to_print;
 
     // print address 
     print_hex_address(p);
-    for(int i = 0; i < remaining_size)
+    for(unsigned int i = 0; i < *remaining_size; i++)
     {
+        printf("In for loop, i = %d | remaining size = %d\n", i, *remaining_size);
+
         // Write space when 2 bytes printed
         if(i && i % 2 == 0)
         {
             write(1, &space, 1);
         }
-
+        // Print pointer value
+        printf("%d - ", (int)*(char*)p);
+        // increment pointer location
+        p++;
     }
-    // increment pointer location
-    p += bytes_to_print;
+    *remaining_size -= bytes_to_print;
+    // p += bytes_to_print;
 }
 
 /**
@@ -133,7 +138,7 @@ void append_printable_string(char str[], int byte_val, int i)
     char c;
     if(byte_val < 32 || byte_val > 126)
     {
-        c = '.'
+        c = '.';
     }
     else
     {
@@ -150,6 +155,7 @@ void *ft_print_memory(void *addr, unsigned int size)
     {
         return addr;
     }
+    print_line(addr, &size);
     return addr;
 }
 
@@ -157,14 +163,15 @@ void *ft_print_memory(void *addr, unsigned int size)
 
 int main()
 {
-    long long a = 2;
-    long long *b = &a;
-    int c = 'e';
-    int *d = &c;
-    
-    ft_print_memory(b, 2);
-    printf("\n");
-    ft_print_memory(d, 2);
-    printf("\n");
+    char *test = "Hello World";
+    // long long *b = &a;
+    // int c = 'e';
+    // int *d = &c;
+    // unsigned int size = 12;
+    ft_print_memory(test, 12);
+    // ft_print_memory(b, 2);
+    // printf("\n");
+    // ft_print_memory(d, 2);
+    // printf("\n");
     return 0;
 }
