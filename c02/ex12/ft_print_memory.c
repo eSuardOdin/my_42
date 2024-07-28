@@ -98,33 +98,6 @@ void print_byte(char *p)
     }
 }
 
-void print_line(void *p, unsigned int *remaining_size)
-{
-    printf("In print_line, size = %d\n", *remaining_size);
-    char space = ' ';
-    //char line[16];
-    // Check remaining
-    int bytes_to_print = *remaining_size < 16 ? *remaining_size : 16;
-
-    // print address 
-    print_hex_address(p);
-    for(unsigned int i = 0; i < *remaining_size; i++)
-    {
-        printf("In for loop, i = %d | remaining size = %d\n", i, *remaining_size);
-
-        // Write space when 2 bytes printed
-        if(i && i % 2 == 0)
-        {
-            write(1, &space, 1);
-        }
-        // Print pointer value
-        printf("%d - ", (int)*(char*)p);
-        // increment pointer location
-        p++;
-    }
-    *remaining_size -= bytes_to_print;
-    // p += bytes_to_print;
-}
 
 /**
  * @brief Append the string with the values read in memory
@@ -148,6 +121,45 @@ void append_printable_string(char str[], int byte_val, int i)
 }
 
 
+void *print_line(void *p, unsigned int *remaining_size)
+{
+    // printf("In print_line, size = %d\n", *remaining_size);
+    char space = ' ';
+    char newline = '\n';
+    char tab = '\t';
+    int line_index = 0;
+    char line[16];
+    // Check remaining
+    int bytes_to_print = *remaining_size < 16 ? *remaining_size : 16;
+
+    // print address 
+    print_hex_address(p);
+    for(int i = 0; i < bytes_to_print; i++)
+    {
+        // Write space when 2 bytes printed
+        if(i && i % 2 == 0)
+        {
+            write(1, &space, 1);
+        }
+        // Print pointer value
+        print_byte((char*)p);
+        // Append printable string with char value
+        append_printable_string(line, (int)*(char*)p, line_index);
+        // increment pointer location and string index
+        p++;
+        line_index++;
+    }
+    // Print space + printable line + \n
+    write(1, &tab, 1);
+    write(1, &line, (line_index));
+    write(1, &newline, 1);
+    *remaining_size -= bytes_to_print;
+    return p;
+}
+
+
+
+
 
 void *ft_print_memory(void *addr, unsigned int size)
 {
@@ -155,7 +167,10 @@ void *ft_print_memory(void *addr, unsigned int size)
     {
         return addr;
     }
-    print_line(addr, &size);
+    while(size != 0)
+    {
+        addr = print_line(addr, &size);
+    }
     return addr;
 }
 
@@ -163,12 +178,11 @@ void *ft_print_memory(void *addr, unsigned int size)
 
 int main()
 {
-    char *test = "Hello World";
-    // long long *b = &a;
+    char *test = "Hello World, etlol. Accent aigu -> ééé @ ça en fait des chears non printable\n\\ \r COUCOU 1234567890 LES CHIFFRES !!!! ??duOn va \tmettre du lorem ipsum etc. J'adore ce jeur c'est dingue";
     // int c = 'e';
     // int *d = &c;
     // unsigned int size = 12;
-    ft_print_memory(test, 12);
+    ft_print_memory(test, 128);
     // ft_print_memory(b, 2);
     // printf("\n");
     // ft_print_memory(d, 2);
