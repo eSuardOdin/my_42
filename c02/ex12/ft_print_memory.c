@@ -178,14 +178,12 @@ void *ft_print_memory(void *addr, unsigned int size)
 
 int main()
 {
-    char *test = "Hello World, etlol. Accent aigu -> ééé @ ça en fait des chears non printable\n\\ \r COUCOU 1234567890 LES CHIFFRES !!!! ??duOn va \tmettre du lorem ipsum etc. J'adore ce jeur c'est dingue";
-    // int c = 'e';
-    // int *d = &c;
-    // unsigned int size = 12;
-    ft_print_memory(test, 128);
-    // ft_print_memory(b, 2);
-    // printf("\n");
-    // ft_print_memory(d, 2);
-    // printf("\n");
+    char *test = "Hello World, etlol. Accent aigu -> qsdqsd  ca en fait des chears non printable\n\\ \r COUCOU 1234567890 LES CHIFFRES !!!! ??duOn va \tmettre du lorem ipsum etc. J'adore ce jeu c'est dingue";
+    ft_print_memory(test, 185);
+
+    // Test non printable
+    char *bugz = "Bonjour les amis ! Comment allez vous ??";
+    ft_print_memory(bugz, 41);
+
     return 0;
 }
