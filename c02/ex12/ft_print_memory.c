@@ -109,7 +109,7 @@ void print_byte(char *p)
 void append_printable_string(char str[], int byte_val, int i)
 {
     char c;
-    if(byte_val < 32 || byte_val > 126)
+    if(byte_val < 33 || byte_val > 126)
     {
         c = '.';
     }
@@ -178,12 +178,8 @@ void *ft_print_memory(void *addr, unsigned int size)
 
 int main()
 {
-    char *test = "Hello World, etlol. Accent aigu -> qsdqsd  ca en fait des chears non printable\n\\ \r COUCOU 1234567890 LES CHIFFRES !!!! ??duOn va \tmettre du lorem ipsum etc. J'adore ce jeu c'est dingue";
-    ft_print_memory(test, 185);
-
-    // Test non printable
-    char *bugz = "Bonjour les amis ! Comment allez vous ??";
-    ft_print_memory(bugz, 41);
+    char *test = "Bonjour linkedin !     Voici un super exercice pour comprendre comment fonctionne la memoire et son allocation.";
+    ft_print_memory(test, 112);
 
     return 0;
 }
