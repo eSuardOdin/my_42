@@ -13,9 +13,10 @@ char *ft_strncat(char *dest, char *src, unsigned int nb)
     {
         dest++;
     }
-    while (*src != '\0')
+    while (*src != '\0' && nb)
     {
         *dest++ = *src++;
+        nb--;
     }
     // Add null byte
     *dest = '\0';
@@ -25,9 +26,9 @@ char *ft_strncat(char *dest, char *src, unsigned int nb)
 
 int main()
 {
-    char dest[27] = "Hello";
-    char *src = " comment allez vous ?";
-    char *res = ft_strcat(dest, src);
+    char dest[4] = "AB";
+    char *src = "C";
+    char *res = ft_strncat(dest, src, 1);
     
     while(*res != '\0')
     {
