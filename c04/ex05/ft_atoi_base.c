@@ -64,26 +64,28 @@ int is_base_valid(char *str)
 }
 
 /**
- * @brief Tests if a symbol is contained in a base (base must have been tested as valid before)
+ * @brief Tests if a symbol is contained in a base (base must have been tested as valid before). If in base, returns its index.
  * 
  * @param symbol The symbole to test
  * @param base The base to test against
- * @return int 0 - 1
+ * @return int index of the symbol or -1 if not present
  */
-int is_symbol_in_base(char symbol, char *base)
+int base_index(char symbol, char *base)
 {
+    int index = 0;
     char *base_copy = base;
     while(*base_copy != '\0')
     {
-        if(*base_copy == symbol) return 1;
+        if(*base_copy == symbol) return index;
         base_copy++;
+        index++;
     }
-    return 0;
+    return -1;
 }
 
-ft_atoi_base(char *str, char *base)
+int ft_atoi_base(char *str, char *base)
 {
-
+    // printf("Casting nb %s\n", str);
     // Result to return
     int res = 0;
     // Number of '-' signs
@@ -96,7 +98,7 @@ ft_atoi_base(char *str, char *base)
     int base_len = is_base_valid(base);
     if(!base_len)
     {
-        return;
+        return res;
     }
     // Power of base
     int pow = 0;
@@ -128,7 +130,7 @@ ft_atoi_base(char *str, char *base)
 
     
     // Checking for digits
-    while(is_symbol_in_base(*str, base))
+    while(base_index(*str, base) != -1)
     {
         if(back_ptr == NULL)
         {
@@ -139,25 +141,28 @@ ft_atoi_base(char *str, char *base)
     }
 
     // Calculate number
-    // printf("Index: %d\nChar: %d\n", n_index, str[n_index]);
-    while(is_symbol_in_base(*back_ptr, base))
+    int i;
+    while((i = base_index(*back_ptr, base)) != -1)
     {
-        // printf("Index : %d\n", n_index);
-        res += ((int)(*(back_ptr++) - '0')) * pow; // Ici il faut que j'ai l'index du symbol dans la base
-                                                    // is_symbol in char devra renvoyer -1 si erreur et renvoyer l'index dans la base sinon
+        // printf("Found %c wich is index %d of the base, multiplied by power %d\n",*back_ptr, i, pow);
+        res += i * pow; 
         if(pow == 1)
         {
             break;
         }
         pow /= base_len;
+        back_ptr++;
     }
     return (neg_n % 2 == 0) ? res : -res;
 }
 
 int main()
 {
-    char *str = "   \n\r\n  \t \v++-6-+-4567";   
+    // Whitespaces and '+' '-'
+    // char *str = "   \n\r\n  \t \v++-01110-+-4567";
+    char *str = "ae12";
+    char *base = "0123456789abcdef";
     // printf("%d white space\n", ft_atoi(str));
-    printf("%d\n", ft_atoi(str));
+    printf("%d\n", ft_atoi_base(str, base));
     return 0;
 }
