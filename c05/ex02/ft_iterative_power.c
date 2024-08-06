@@ -1,5 +1,5 @@
 /*
-    Autorisé :
+    Autorisé : Aucune
     But :
         • Écrire une fonction itérative qui renvoie une puissance d’un nombre. Une puissance
     inferieur à 0 renverra 0.
