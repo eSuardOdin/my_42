@@ -7,6 +7,11 @@ Point::Point(float x, float y)
     this->Y = y;
 }
 
+Point::~Point()
+{
+    std::cout << "Point destructed" << std::endl;
+}
+
 void Point::Display()
 {
     std::cout << "The point coordinates : " << std::endl;
@@ -18,4 +23,15 @@ void Point::Translate(float x, float y)
 {
     this->X += x;
     this->Y += y;
+}
+
+float Point::GetX()
+{
+    return X;
+}
+
+
+float Point::GetY()
+{
+    return Y;
 }

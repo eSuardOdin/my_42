@@ -1,3 +1,6 @@
+#ifndef POINT_H
+#define POINT_H
+
 class Point
 {
 private:
@@ -7,6 +10,9 @@ public:
     Point(float x, float y);
     void Translate(float x, float y);
     void Display();
+    float GetX();
+    float GetY();
     ~Point();
 };
 
+#endif
