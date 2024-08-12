@@ -7,6 +7,7 @@ class set_char
 {
     private:
     unsigned char set[N_CHAR_MAX];
+
     public:
     set_char();
     int add_char(char c);

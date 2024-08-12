@@ -54,6 +54,5 @@ void set_char::display()
         }
         std::cout << set[i];
     }
-    std::cout << std::endl;
-    
+    std::cout << std::endl; 
 }

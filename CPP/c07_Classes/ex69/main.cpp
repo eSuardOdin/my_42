@@ -6,6 +6,12 @@ On doit pouvoir réaliser sur cet ensemble les opérations suivantes :
     - Savoir si un caractère est présent
 Aucune allocation dynamique, il faut prévoir en membre donnés un tableau de taille
 fixe
+
+-- AJOUT EX 70 --
+Trois nouvelles methodes qui permettent l'iteration
+ init : initialise l'iterateur
+ next : get le prochain
+ is_last : savoir si on peut continuer à parcourir  
 */
 #include <iostream>
 #include "./set_char.h"
