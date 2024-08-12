@@ -42,29 +42,7 @@ int main(int argc, char **argv)
             }
         }
     }
-    // while(i < argc - 1)
-    // {
-    //     j = i + 1;
-    //     is_sorted = 1;
-    //     while (j < argc)
-    //     {
-    //         int cmp = ft_strcmp(argv[i], argv[j]);
-    //         // If unsorted
-    //         if(cmp > 0)
-    //         {
-    //             char *temp = argv[i];
-    //             argv[i] = argv[j];
-    //             argv[j] = temp;
-    //             is_sorted = 0;
-    //         }
-    //         j++;
-    //     }
-    //     if(is_sorted)
-    //     {
-    //         i++;
-    //         // is_sorted = 0;
-    //     }
-    // }
+
     char ret = '\n';
     for(int i = 1; i < argc; i++)
     {
